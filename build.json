@@ -1,0 +1,22 @@
+{
+	"preamble": {
+	
+		"source": "*",
+		"target": "NativeGaudi",
+		"cc": "g++"
+	},
+
+	"build": [
+
+		{ "echo": "Compiling NativeGaudi..." },
+		{ "exec": "g++ NativeGaudiBase.cpp NativeGaudiApp.cpp NativeGaudiBuilder.cpp -o NativeGaudi" },
+		{ "echo": "Strip executable..." },
+		{ "xstrip": "NativeGaudi" }
+	],
+	
+	"clean": [
+
+		{ "echo": "Erasing NativeGaudi..." },
+		{ "erasex": "NativeGaudi" }
+	]
+}
