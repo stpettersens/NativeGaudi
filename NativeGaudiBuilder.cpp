@@ -11,6 +11,7 @@ For dependencies, please see LICENSE file.
 #include <iostream>
 #include <cstring>
 #include <string>
+#include "boost/tuple/tuple.hpp"
 #include "NativeGaudiBase.h"
 using namespace std;
 
@@ -20,7 +21,7 @@ private:
 
 	void substituteVars(string[]);
 	string handleWildcards(string);
-	string extractCommand(string); // Change return type to tuple.
+	boost::tuple<string, string> extractCommand(string);
 	void printError(string);
 	void printCommand(string, string);
 	void execExtern(string);
