@@ -12,12 +12,15 @@ For dependencies, please see LICENSE file.
 #include <cstring>
 #include <string>
 #include "boost/tuple/tuple.hpp"
+#include "json_spirit.h"
 #include "NativeGaudiBase.h"
 using namespace std;
 
 class NativeGaudiBuilder : protected NativeGaudiBase {
 
 private: 
+
+	string buildConf;
 
 	void substituteVars(string[]);
 	string handleWildcards(string);
@@ -29,9 +32,9 @@ private:
 
 public:
 
-	NativeGaudiBuilder(string, bool, bool, bool)
+	NativeGaudiBuilder(string preamble, bool sSwitch, bool beVerbose, bool logging)
 	{
-
+		buildConf = preamble;
 	}
 	void doCommand(string, string);
 	void doAction(string); // Change to a JSON type.
@@ -39,5 +42,5 @@ public:
 
 void NativeGaudiBuilder::doCommand(string cmd, string param) {
 
-	
+	cout << buildConf;
 }

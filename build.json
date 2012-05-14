@@ -9,7 +9,8 @@
 	"build": [
 
 		{ "echo": "Compiling NativeGaudi..." },
-		{ "exec": "g++ NativeGaudiBase.cpp NativeGaudiApp.cpp NativeGaudiBuilder.cpp -o NativeGaudi -IC:/Dev/Boost" },
+		{ "exec": "g++ NativeGaudiBase.cpp NativeGaudiApp.cpp NativeGaudiBuilder.cpp NativeGaudiHabitat.cpp
+		  -o NativeGaudi -LC:/Dev/json_spirit -l json_spirit -IC:/Dev/Boost -IC:/Dev/json_spirit/json_spirit" },
 		{ "echo": "Strip executable..." },
 		{ "xstrip": "NativeGaudi" }
 	],

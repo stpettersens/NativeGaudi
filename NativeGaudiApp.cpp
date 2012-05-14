@@ -14,6 +14,7 @@ For dependencies, please see LICENSE file.
 #include <cstring>
 #include <string>
 #include <exception>
+#include "json_spirit.h"
 #include "NativeGaudi.h"
 using namespace std;
 
@@ -112,10 +113,11 @@ void NativeGaudiApp::loadBuild(string action) {
 			buildConf += line;
 		}
 	}
+	infile.close();
+
 	// Shrink string by replacing tabs with spaces;
 	// Gaudi build files should be written using tabs.
-	//buildConf.replace() // TODO!
-	infile.close();
+	//buildConf.replace(0, buildConf.Length(), "");
 }
 
 int main(int argc, char* argv[]) {
