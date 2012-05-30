@@ -38,10 +38,10 @@ public:
 		caesarOffset[4] = 0x8;
 		caesarOffset[5] = 0x24;
 		caesarOffset[6] = 0xF;
-		caesarOffset[1] = 0x13;
-		caesarOffset[1] = 0x25;
-		caesarOffset[1] = 0x40;
-		caesarOffset[1] = 0x10;
+		caesarOffset[7] = 0x13;
+		caesarOffset[8] = 0x25;
+		caesarOffset[9] = 0x40;
+		caesarOffset[10] = 0x10;
 		LogFile = "gaudi.log";
 	}
 };
