@@ -26,13 +26,15 @@ private:
 	string appVersion;
 	int errCode;
 	string buildFile;
-	bool beVerbose;
-	bool logging;
 
 	void displayError(exception);
 	void displayError(string);
 
 public:
+
+	bool beVerbose;
+	bool logging;
+	bool uSocket;
 
 	NativeGaudiApp() {
 
@@ -41,11 +43,12 @@ public:
 		buildFile = "build.json";
 		beVerbose = true;
 		logging = false;
+		uSocket = false;
 	}
 
 	void displayUsage(char*, int);
 	void displayVersion();
-	void runCommand(string, string);
+	void runCommand(char*, char*);
 	void loadBuild(string);
 };
 
@@ -92,7 +95,7 @@ void NativeGaudiApp::displayUsage(char* program, int exitCode) {
 
 // Just perform a stdin command; really just for testing implemented
 // commands. E.g. argument ":move a->b".
-void NativeGaudiApp::runCommand(string cmd, string param) {
+void NativeGaudiApp::runCommand(char* cmd, char* param) {
 
 	// Create a new builder to run a command.
 	NativeGaudiBuilder builder("", false, beVerbose, logging);
@@ -125,14 +128,21 @@ int main(int argc, char* argv[]) {
 	NativeGaudiApp app;
 	string action = "build";
 
-	/* Default beavior is to build project following
+	/* Default behavior is to build project following
 	build file in the current working directory. */
 	if(argc == 1) app.loadBuild(action);
 
 	// Handle command line arguments.
 	else if(argc > 1 && argc < 7) {
-		if(strcmp(argv[1], "-i") == 0) app.displayUsage(argv[0], 0);
-		else if(strcmp(argv[1], "-v") == 0) app.displayVersion();
+		for (int i = 0; i < argc; i++)
+		{
+			if(strcmp(argv[i], "-i") == 0) app.displayUsage(argv[0], 0);
+			else if(strcmp(argv[i], "-v") == 0) app.displayVersion();
+			else if(strcmp(argv[i], "-l") == 0) app.logging = true;
+			else if(strcmp(argv[i], "-s") == 0) app.uSocket = true;
+			//else if(strcmp(argv[1], "-b")) app.generateBuildFile();
+			//else app.runCommand(argv[1], argv[2]);
+		}
 	}
 
 	return 0;

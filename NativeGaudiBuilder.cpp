@@ -40,7 +40,8 @@ public:
 	void doAction(string); // Change to a JSON type.
 };
 
-void NativeGaudiBuilder::doCommand(string cmd, string param) {
+	void NativeGaudiBuilder::doCommand(string cmd, string param) {
 
+	cout << cmd << ", " << param;
 	cout << buildConf;
 }
