@@ -12,7 +12,7 @@ For dependencies, please see LICENSE file.
 #include "NativeGaudiBase.h"
 using namespace std;
 
-class NativeGaudiBuilder : protected NativeGaudiBase {
+class NativeGaudiBuilder : public NativeGaudiBase {
 
 private: 
 

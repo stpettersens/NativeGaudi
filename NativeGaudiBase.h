@@ -18,7 +18,7 @@ private:
 	int caesarOffset[];
 	string LogFile;
 
-protected:
+public:
 
 	void logDump(string, bool);
 	void writeToFile(string, string, bool);

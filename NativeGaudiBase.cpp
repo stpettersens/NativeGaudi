@@ -17,17 +17,15 @@ class NativeGaudiBase  {
 
 private:
 
-	int caesarOffset[11];
+	int caesarOffset[12];
 	string LogFile;
 
-protected:
+public:
 
 	void logDump(string, bool);
 	void writeToFile(string, string, bool);
 	string encodeText(string);
 	string decodeText(string);
-
-public:
 
 	NativeGaudiBase() {
 
@@ -36,12 +34,13 @@ public:
 		caesarOffset[2] = 0xA;
 		caesarOffset[3] = 0x1F;
 		caesarOffset[4] = 0x8;
-		caesarOffset[5] = 0x24;
-		caesarOffset[6] = 0xF;
-		caesarOffset[7] = 0x13;
-		caesarOffset[8] = 0x25;
-		caesarOffset[9] = 0x40;
-		caesarOffset[10] = 0x10;
+		caesarOffset[5] = 0x2;
+		caesarOffset[6] = 0x24;
+		caesarOffset[7] = 0xF;
+		caesarOffset[8] = 0x13;
+		caesarOffset[9] = 0x25;
+		caesarOffset[10] = 0x40;
+		caesarOffset[11] = 0x10;
 		LogFile = "gaudi.log";
 	}
 };
@@ -60,12 +59,14 @@ void NativeGaudiBase::writeToFile(string file, string message, bool append) {
 string NativeGaudiBase::encodeText(string message) {
 
 	string emessage;
-	for(int x = 0; x < message.length(); x++) {
+	int x = 0;
+	for(int i = 0; i < message.length(); i++) {
 
-		if(x == 11) x = 0;
-		int cv = (char)message[x];
-		char ca = (int)cv;
+		if(x == 12) x = 0;
+		int cv = (int)message[x] - caesarOffset[x];
+		char ca = (char)cv;
 		emessage += ca;
+		x++;
 	}
 	return emessage;
 }
@@ -74,12 +75,14 @@ string NativeGaudiBase::encodeText(string message) {
 string NativeGaudiBase::decodeText(string message) {
 
 	string umessage;
-	for(int x = 0; x < message.length(); x++) {
+	int x = 0;
+	for(int i = 0; i < message.length(); i++) {
 
-		if(x == 11) x = 0;
-		int cv = (char)message[x];
-		char ca = (int)cv;
+		if(x == 12) x = 0;
+		int cv = (int)message[x] + caesarOffset[x];
+		char ca = (char)cv;
 		umessage += ca;
+		x++;
 	}
 	return umessage;
 }

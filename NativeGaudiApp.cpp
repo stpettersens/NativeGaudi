@@ -18,7 +18,7 @@ For dependencies, please see LICENSE file.
 #include "NativeGaudi.h"
 using namespace std;
 
-class NativeGaudiApp : protected NativeGaudiBase {
+class NativeGaudiApp : public NativeGaudiBase {
 
 private:
 
@@ -128,8 +128,8 @@ int main(int argc, char* argv[]) {
 	NativeGaudiApp app;
 	string action = "build";
 
-	/* Default behavior is to build project following
-	build file in the current working directory. */
+	/* Default behavior is to build a project following
+	the build file in the current working directory. */
 	if(argc == 1) app.loadBuild(action);
 
 	// Handle command line arguments.
@@ -147,4 +147,3 @@ int main(int argc, char* argv[]) {
 
 	return 0;
 }
-	
