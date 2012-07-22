@@ -21,7 +21,6 @@ using namespace std;
 class NativeGaudiApp : public NativeGaudiBase {
 
 private:
-
 	char* program;
 	string appVersion;
 	int errCode;
@@ -31,7 +30,6 @@ private:
 	void displayError(string);
 
 public:
-
 	bool beVerbose;
 	bool logging;
 	bool uSocket;
@@ -68,14 +66,12 @@ void NativeGaudiApp::displayError(exception ex) {
 
 // Display an error. Overloaded for a string parameter.
 void NativeGaudiApp::displayError(string ex) {
-
 	cout << "\nError with: " << ex << ".";
 	displayUsage(program, errCode);
 }
 
 // Display usage information and exit.
 void NativeGaudiApp::displayUsage(char* program, int exitCode) {
-
 	program = program;
 	cout << "\nNativeGaudi platform agnostic build tool";
 	cout << "\nCopyright (c) 2012 Sam Saint-Pettersen";
@@ -96,7 +92,6 @@ void NativeGaudiApp::displayUsage(char* program, int exitCode) {
 // Just perform a stdin command; really just for testing implemented
 // commands. E.g. argument ":move a->b".
 void NativeGaudiApp::runCommand(char* cmd, char* param) {
-
 	// Create a new builder to run a command.
 	NativeGaudiBuilder builder("", false, beVerbose, logging);
 	builder.doCommand(cmd, param);
@@ -105,7 +100,6 @@ void NativeGaudiApp::runCommand(char* cmd, char* param) {
 
 // Load and delegate parse and execution of build file.
 void NativeGaudiApp::loadBuild(string action) {
-
 	string buildConf, line;
 	ifstream infile;
 	infile.open(buildFile.c_str());
@@ -124,7 +118,6 @@ void NativeGaudiApp::loadBuild(string action) {
 }
 
 int main(int argc, char* argv[]) {
-
 	NativeGaudiApp app;
 	string action = "build";
 
@@ -144,6 +137,5 @@ int main(int argc, char* argv[]) {
 			//else app.runCommand(argv[1], argv[2]);
 		}
 	}
-
 	return 0;
 }

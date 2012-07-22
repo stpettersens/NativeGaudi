@@ -1,4 +1,4 @@
-/*
+/*s
 NativeGaudi platform agnostic build tool.
 Copyright 2012 Sam Saint-Pettersen.
 
@@ -9,6 +9,7 @@ Released under the MIT/X11 License.
 For dependencies, please see LICENSE file.
 */
 #include <iostream>
+#include <fstream>
 #include <cstring>
 #include <string>
 using namespace std;
@@ -16,19 +17,16 @@ using namespace std;
 class NativeGaudiBase  {
 
 private:
-
 	int caesarOffset[12];
 	string LogFile;
 
 public:
-
 	void logDump(string, bool);
 	void writeToFile(string, string, bool);
 	string encodeText(string);
 	string decodeText(string);
 
 	NativeGaudiBase() {
-
 		caesarOffset[0] = 0x22; 
 		caesarOffset[1] = 0x1C;
 		caesarOffset[2] = 0xA;
@@ -52,16 +50,21 @@ void NativeGaudiBase::logDump(string message, bool isLogging) {
 
 // File writing operations.
 void NativeGaudiBase::writeToFile(string file, string message, bool append) {
-
+	ofstream fout;
+	if(!append) fout.open(file.c_str(), ios::out);
+	else fout.open(file.c_str(), ios::app);
+	if(fout.is_open()) {
+		fout << message << "\n";
+		fout.close();
+	}
+	else cout << "Unable to write to file.";
 }
 
 // Encode a message in a simple Caesar cipher.
 string NativeGaudiBase::encodeText(string message) {
-
 	string emessage;
 	int x = 0;
 	for(int i = 0; i < message.length(); i++) {
-
 		if(x == 12) x = 0;
 		int cv = (int)message[x] - caesarOffset[x];
 		char ca = (char)cv;
@@ -73,7 +76,6 @@ string NativeGaudiBase::encodeText(string message) {
 
 // Decode a message in a simple Caesar cipher.
 string NativeGaudiBase::decodeText(string message) {
-
 	string umessage;
 	int x = 0;
 	for(int i = 0; i < message.length(); i++) {
