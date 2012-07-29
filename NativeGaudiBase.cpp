@@ -1,4 +1,4 @@
-/*s
+/*
 NativeGaudi platform agnostic build tool.
 Copyright 2012 Sam Saint-Pettersen.
 
@@ -16,11 +16,10 @@ using namespace std;
 
 class NativeGaudiBase  {
 
-private:
+protected:
 	int caesarOffset[12];
 	string LogFile;
-
-public:
+	
 	void logDump(string, bool);
 	void writeToFile(string, string, bool);
 	string encodeText(string);

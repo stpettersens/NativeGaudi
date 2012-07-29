@@ -9,6 +9,7 @@ Released under the MIT/X11 License.
 For dependencies, please see LICENSE file.
 */
 #include <iostream>
+#include <algorithm>
 #include <fstream>
 #include <cstdlib>
 #include <cstring>
@@ -18,7 +19,7 @@ For dependencies, please see LICENSE file.
 #include "NativeGaudi.h"
 using namespace std;
 
-class NativeGaudiApp : public NativeGaudiBase {
+class NativeGaudiApp : NativeGaudiBase {
 
 private:
 	char* program;
@@ -114,7 +115,7 @@ void NativeGaudiApp::loadBuild(string action) {
 
 	// Shrink string by replacing tabs with spaces;
 	// Gaudi build files should be written using tabs.
-	//buildConf.replace(0, buildConf.Length(), "");
+	replace(buildConf.begin(), buildConf.end(), '\t', ' ');
 }
 
 int main(int argc, char* argv[]) {
