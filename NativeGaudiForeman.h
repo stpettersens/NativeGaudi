@@ -20,11 +20,3 @@ private:
 public:
 	NativeGaudiForeman(string);
 };
-
-NativeGaudiForeman::NativeGaudiForeman(string buildConf) {
-	buildJson = parseBuildJSON();
-}
-
-string NativeGaudiForeman::parseBuildJSON() {
-	cout << "Invoked NativeGaudiForeman!";
-}

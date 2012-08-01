@@ -15,7 +15,6 @@ using namespace std;
 class NativeGaudiBuilder : public NativeGaudiBase {
 
 private: 
-
 	void substituteVars(string[]);
 	string handleWildcards(string);
 	string extractCommand(string); // Change return type to tuple.
@@ -25,7 +24,6 @@ private:
 	void eraseFile(string, bool);
 
 public:
-
 	NativeGaudiBuilder(string, bool, bool, bool)
 	{
 		

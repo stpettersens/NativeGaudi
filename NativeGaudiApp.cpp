@@ -16,7 +16,8 @@ For dependencies, please see LICENSE file.
 #include <string>
 #include <exception>
 #include "json_spirit.h"
-#include "NativeGaudi.h"
+#include "NativeGaudiForeman.h"
+#include "NativeGaudiBuilder.h"
 using namespace std;
 
 class NativeGaudiApp : NativeGaudiBase {
@@ -116,6 +117,9 @@ void NativeGaudiApp::loadBuild(string action) {
 	// Shrink string by replacing tabs with spaces;
 	// Gaudi build files should be written using tabs.
 	replace(buildConf.begin(), buildConf.end(), '\t', ' ');
+
+	cout << buildConf << "\n";
+	NativeGaudiForeman foreman("abc");
 }
 
 int main(int argc, char* argv[]) {
