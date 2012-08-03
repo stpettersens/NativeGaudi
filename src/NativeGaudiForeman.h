@@ -14,17 +14,14 @@ using namespace std;
 
 class NativeGaudiForeman {
 private:
+	string buildConf;
 	string buildJson;
 	string parseBuildJSON();
+	string getShard(string);
+	string getTarget();
+	string getPreamble();
+	string getAction(string);
 
 public:
 	NativeGaudiForeman(string);
 };
-
-NativeGaudiForeman::NativeGaudiForeman(string buildConf) {
-	buildJson = parseBuildJSON();
-}
-
-string NativeGaudiForeman::parseBuildJSON() {
-	cout << "Invoked NativeGaudiForeman!";
-}

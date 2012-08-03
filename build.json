@@ -9,15 +9,16 @@
 	"build": [
 
 		{ "echo": "Compiling NativeGaudi..." },
-		{ "exec": "g++ NativeGaudiBase.cpp NativeGaudiApp.cpp NativeGaudiForeman.cpp NativeGaudiBuilder.cpp NativeGaudiHabitat.cpp
-		  -o NativeGaudi -LC:/Dev/json_spirit -l json_spirit -IC:/Dev/Boost -IC:/Dev/json_spirit/json_spirit" },
+		{ "exec": "g++ src/NativeGaudiBase.cpp src/NativeGaudiApp.cpp src/NativeGaudiForeman.cpp src/NativeGaudiBuilder.cpp 
+		   src/NativeGaudiHabitat.cpp -o bin/NativeGaudi -LC:/Dev/json_spirit -l json_spirit -IC:/Dev/Boost 
+		   -IC:/Dev/json_spirit/json_spirit" },
 		{ "echo": "Strip executable..." },
-		{ "xstrip": "NativeGaudi" }
+		{ "xstrip": "bin/NativeGaudi" }
 	],
 	
 	"clean": [
 
 		{ "echo": "Erasing NativeGaudi..." },
-		{ "erasex": "NativeGaudi" }
+		{ "erasex": "bin/NativeGaudi" }
 	]
 }

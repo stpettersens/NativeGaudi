@@ -118,8 +118,9 @@ void NativeGaudiApp::loadBuild(string action) {
 	// Gaudi build files should be written using tabs.
 	replace(buildConf.begin(), buildConf.end(), '\t', ' ');
 
-	cout << buildConf << "\n";
-	NativeGaudiForeman foreman("abc");
+	// Delegate to the foreman and builder.
+	NativeGaudiForeman foreman(buildConf);
+	NativeGaudiBuilder builder("preamble", false, false, false);
 }
 
 int main(int argc, char* argv[]) {

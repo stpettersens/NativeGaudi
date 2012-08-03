@@ -16,7 +16,7 @@ For dependencies, please see LICENSE file.
 #include "NativeGaudiBase.h"
 using namespace std;
 
-class NativeGaudiBuilder : protected NativeGaudiBase {
+class NativeGaudiBuilder : NativeGaudiBase {
 
 private: 
 
@@ -32,16 +32,24 @@ private:
 
 public:
 
-	NativeGaudiBuilder(string preamble, bool sSwitch, bool beVerbose, bool logging)
-	{
-		buildConf = preamble;
-	}
+	NativeGaudiBuilder(string, bool, bool, bool);
 	void doCommand(string, string);
 	void doAction(string); // Change to a JSON type.
 };
 
-	void NativeGaudiBuilder::doCommand(string cmd, string param) {
+NativeGaudiBuilder::NativeGaudiBuilder(string preamble, bool socket, bool verbose, bool logging)
+{
+	// TODO.
+}
+
+// Execute a command in the action.
+void NativeGaudiBuilder::doCommand(string cmd, string param) {
 
 	cout << cmd << ", " << param;
 	cout << buildConf;
+}
+
+// Execute an action.
+void NativeGaudiBuilder::doAction(string action) {
+	
 }
