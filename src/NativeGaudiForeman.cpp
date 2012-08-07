@@ -34,7 +34,6 @@ NativeGaudiForeman::NativeGaudiForeman(string buildConf) {
 
 string NativeGaudiForeman::parseBuildJSON() {
 	cout << buildConf << endl;
-	cout << "Invoked NativeGaudiForeman!" << endl;
 }
 
 // Get sub-object 'shard' from build JSON object.
