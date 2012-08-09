@@ -9,8 +9,12 @@ Released under the MIT/X11 License.
 For dependencies, please see LICENSE file.
 */
 #include <string>
+//#include <cstdio>
+#include <sstream>
 #include "json_spirit.h"
+#include "json_spirit_stream_reader.h"
 using namespace std;
+using namespace json_spirit;
 
 class NativeGaudiForeman {
 private:
@@ -33,7 +37,15 @@ NativeGaudiForeman::NativeGaudiForeman(string buildConf) {
 }
 
 string NativeGaudiForeman::parseBuildJSON() {
-	cout << buildConf << endl;
+	istringstream is(buildConf);
+	Stream_reader<istringstream, Value> reader(is);
+	Value value;
+	bool ok = reader.read_next(value);
+	cout << ok << endl;
+	ok = reader.read_next(value);
+	cout << ok << endl;
+	ok = reader.read_next(value);
+	cout << ok << endl;
 }
 
 // Get sub-object 'shard' from build JSON object.
@@ -51,7 +63,7 @@ string NativeGaudiForeman::getPreamble() {
 	// TODO.
 }
 
-// Get an excution action
-string getAction(string action) {
+// Get an excution action.
+string NativeGaudiForeman::getAction(string action) {
 	// TODO.
 }

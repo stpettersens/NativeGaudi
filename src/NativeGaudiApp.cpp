@@ -37,7 +37,6 @@ public:
 	bool uSocket;
 
 	NativeGaudiApp() {
-
 		appVersion = "0.1";
 		errCode = -2;
 		buildFile = "build.json";
@@ -54,14 +53,12 @@ public:
 
 // Display version information and exit.
 void NativeGaudiApp::displayVersion() {
-
 	cout << "NativeGaudi v. " << appVersion << ".\n";
 	exit(0);
 }
 
 // Display an error.
 void NativeGaudiApp::displayError(exception ex) {
-
 	cout << "\nError with: " << ex.what() << ".";
 	displayUsage(program, errCode);
 }
@@ -106,9 +103,7 @@ void NativeGaudiApp::loadBuild(string action) {
 	ifstream infile;
 	infile.open(buildFile.c_str());
 	if(infile.is_open()) {
-
 		while(getline(infile, line)) {
-
 			buildConf += line;
 		}
 	}
