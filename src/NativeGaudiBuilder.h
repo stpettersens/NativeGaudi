@@ -12,7 +12,6 @@ For dependencies, please see LICENSE file.
 #include <cstring>
 #include <string>
 #include "boost/tuple/tuple.hpp"
-#include "json_spirit.h"
 #include "NativeGaudiBase.h"
 using namespace std;
 

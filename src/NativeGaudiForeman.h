@@ -9,19 +9,21 @@ Released under the MIT/X11 License.
 For dependencies, please see LICENSE file.
 */
 #include <string>
-#include "json_spirit.h"
+#include <vector>
 using namespace std;
 
 class NativeGaudiForeman {
 private:
-	string buildConf;
+	string m_buildConf;
 	string buildJson;
+	vector<string> preamble;
+	string target;
 	string parseBuildJSON();
-	string getShard(string);
+	vector<string> getShards(string);
 	string getTarget();
-	string getPreamble();
-	string getAction(string);
+	vector<string> getPreamble();
+	vector<string> getAction(string);
 
 public:
-	NativeGaudiForeman(string);
+	NativeGaudiForeman(string buildConf, string action);
 };

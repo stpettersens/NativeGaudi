@@ -1,6 +1,6 @@
 /*
 NativeGaudi platform agnostic build tool.
-Copyright 2012 Sam Saint-Pettersen.
+Copyright 2012-2013 Sam Saint-Pettersen.
 
 Port of the original Scala/Java application (Gaudi), which ran on the
 Java virtual machine, to native C++ code.
@@ -14,10 +14,11 @@ For dependencies, please see LICENSE file.
 #include <cstdlib>
 #include <cstring>
 #include <string>
-#include <exception>
-#include "json_spirit.h"
+#include <vector>
+#include "boost/version.hpp"
 #include "NativeGaudiForeman.h"
 #include "NativeGaudiBuilder.h"
+#include "NativeGaudiCommands.h"
 using namespace std;
 
 class NativeGaudiApp : NativeGaudiBase {
@@ -28,7 +29,6 @@ private:
 	int errCode;
 	string buildFile;
 
-	void displayError(exception);
 	void displayError(string);
 
 public:
@@ -53,14 +53,13 @@ public:
 
 // Display version information and exit.
 void NativeGaudiApp::displayVersion() {
-	cout << "NativeGaudi v. " << appVersion << ".\n";
+	cout << "NativeGaudi v. " << appVersion 
+	<< " (using Boost "
+	<< BOOST_VERSION / 100000 << "." // Major version.
+	<< BOOST_VERSION / 100 % 1000 << "." // Minor version.
+	<< BOOST_VERSION % 100 // Patch level.
+	<< ")." << endl;
 	exit(0);
-}
-
-// Display an error.
-void NativeGaudiApp::displayError(exception ex) {
-	cout << "\nError with: " << ex.what() << ".";
-	displayUsage(program, errCode);
 }
 
 // Display an error. Overloaded for a string parameter.
@@ -71,7 +70,7 @@ void NativeGaudiApp::displayError(string ex) {
 
 // Display usage information and exit.
 void NativeGaudiApp::displayUsage(char* program, int exitCode) {
-	program = program;
+	this->program = program;
 	cout << "\nNativeGaudi platform agnostic build tool";
 	cout << "\nCopyright (c) 2012 Sam Saint-Pettersen";
 	cout << "\n\nReleased under the MIT/X11 License.";
@@ -90,10 +89,10 @@ void NativeGaudiApp::displayUsage(char* program, int exitCode) {
 
 // Just perform a stdin command; really just for testing implemented
 // commands. E.g. argument ":move a->b".
-void NativeGaudiApp::runCommand(char* cmd, char* param) {
+void NativeGaudiApp::runCommand(char* command, char* param) {
 	// Create a new builder to run a command.
 	NativeGaudiBuilder builder("", false, beVerbose, logging);
-	builder.doCommand(cmd, param);
+	builder.doCommand(command, param);
 	exit(0);
 }
 
@@ -112,10 +111,14 @@ void NativeGaudiApp::loadBuild(string action) {
 	// Shrink string by replacing tabs with spaces;
 	// Gaudi build files should be written using tabs.
 	replace(buildConf.begin(), buildConf.end(), '\t', ' ');
+	
+	// Peform key swapping for JSON array parsing (Hackish).
+	NativeGaudiCommands ocommands;
+	buildConf = ocommands.getXString(buildConf);
 
 	// Delegate to the foreman and builder.
-	NativeGaudiForeman foreman(buildConf);
-	NativeGaudiBuilder builder("preamble", false, false, false);
+	NativeGaudiForeman foreman(buildConf, action);
+	//NativeGaudiBuilder builder("preamble", false, false, false);
 }
 
 int main(int argc, char* argv[]) {

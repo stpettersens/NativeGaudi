@@ -1,6 +1,6 @@
 /*
 NativeGaudi platform agnostic build tool.
-Copyright 2012 Sam Saint-Pettersen.
+Copyright 2012-2013 Sam Saint-Pettersen.
 
 Port of the original Scala/Java application (Gaudi), which ran on the
 Java virtual machine, to native C++ code.
@@ -11,10 +11,13 @@ For dependencies, please see LICENSE file.
 #include <iostream>
 #include <cstring>
 #include <string>
+#include <cassert>
 #include "boost/tuple/tuple.hpp"
-#include "json_spirit.h"
+#include "rapidjson/document.h"
 #include "NativeGaudiBase.h"
 using namespace std;
+using namespace boost;
+using namespace rapidjson;
 
 class NativeGaudiBuilder : NativeGaudiBase {
 
@@ -23,7 +26,7 @@ private:
 	bool verbose;
 	void substituteVars(string);
 	string handleWildcards(string);
-	boost::tuple<string, string> extractCommand(string);
+	tuple<string, string> extractCommand(string);
 	void printError(string);
 	void printCommand(string, string);
 	void execExtern(string);
@@ -52,10 +55,10 @@ string NativeGaudiBuilder::handleWildcards(string param) {
 }
 
 // Extract command and parameter for execution.
-boost::tuple<string, string> NativeGaudiBuilder::extractCommand(string cmdParam) {
+tuple<string, string> NativeGaudiBuilder::extractCommand(string cmdParam) {
 	string x = "x";
 	string y = "y";
-	return boost::make_tuple(x, y); // TODO.
+	return make_tuple(x, y); // TODO.
 }
 
 // Print executed command.
@@ -78,5 +81,5 @@ void NativeGaudiBuilder::doCommand(string cmd, string param) {
 
 // Execute an action.
 void NativeGaudiBuilder::doAction(string action) {
-	
+
 }

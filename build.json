@@ -10,8 +10,7 @@
 
 		{ "echo": "Compiling NativeGaudi..." },
 		{ "exec": "g++ src/NativeGaudiBase.cpp src/NativeGaudiApp.cpp src/NativeGaudiForeman.cpp src/NativeGaudiBuilder.cpp 
-		   src/NativeGaudiHabitat.cpp -o bin/NativeGaudi -LC:/Dev/json_spirit -l json_spirit -IC:/Dev/Boost 
-		   -IC:/Dev/json_spirit/json_spirit" },
+		   src/NativeGaudiHabitat.cpp src/NativeGaudiCommands.cpp -o bin/NativeGaudi -IC:/Dev/Boost" },
 		{ "echo": "Strip executable..." },
 		{ "xstrip": "bin/NativeGaudi" }
 	],
