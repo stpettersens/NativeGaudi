@@ -20,19 +20,19 @@ For dependencies, please see LICENSE file.
 using namespace std;
 using namespace rapidjson;
 
-class NativeGaudiForeman {
+class Foreman {
 private:
 	string m_buildConf;
 	string buildJson;
-	string m_action;
 	vector<string> preamble;
 	vector<string> commands;
 	string target;
 	string parseBuildJSON();
 	vector<string> getShards(string);
-public:
-	NativeGaudiForeman(string buildConf, string action);
 	string getTarget();
 	vector<string> getPreamble();
-	vector<string> getAction();
+	vector<string> getAction(string);
+
+public:
+	Foreman(string buildConf, string action);
 };

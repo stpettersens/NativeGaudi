@@ -91,8 +91,8 @@ void NativeGaudiApp::displayUsage(char* program, int exitCode) {
 // commands. E.g. argument ":move a->b".
 void NativeGaudiApp::runCommand(char* command, char* param) {
 	// Create a new builder to run a command.
-	NativeGaudiBuilder builder("", false, beVerbose, logging);
-	builder.doCommand(command, param);
+	//NativeGaudiBuilder builder(false, beVerbose, logging);
+	//builder.doCommand(command, param);
 	exit(0);
 }
 
@@ -115,10 +115,14 @@ void NativeGaudiApp::loadBuild(string action) {
 	// Peform key swapping for JSON array parsing (Hackish).
 	NativeGaudiCommands ocommands;
 	buildConf = ocommands.getXString(buildConf);
+	//string* commands = ocommands.getCommands();
 
 	// Delegate to the foreman and builder.
-	NativeGaudiForeman foreman(buildConf, action);
-	//NativeGaudiBuilder builder("preamble", false, false, false);
+	//NativeGaudiForeman foreman(buildConf, action);
+	//NativeGaudiBuilder builder(commands, foreman.getPreamble(), false, false, false);
+	//builder.setTarget(foreman.getTarget());
+	//builder.setAction(foreman.getAction());
+	//builder.doAction();
 }
 
 int main(int argc, char* argv[]) {

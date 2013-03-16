@@ -8,6 +8,7 @@ Java virtual machine, to native C++ code.
 Released under the MIT/X11 License.
 For dependencies, please see LICENSE file.
 */
+#include <iostream> // !
 #include <string>
 #include <vector>
 #include "boost/algorithm/string.hpp"
@@ -16,8 +17,10 @@ using namespace boost;
 
 class NativeGaudiCommands {
 private:
-	string commands[100];
+	vector<string> builtins;
+	vector<string> commands;
 public:
 	NativeGaudiCommands();
 	string getXString(string buildConf);
+	vector<string> getCommands();
 };

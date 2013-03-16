@@ -12,17 +12,18 @@ For dependencies, please see LICENSE file.
 #include <cstring>
 #include <string>
 #include <cassert>
+#include <vector>
 #include "boost/tuple/tuple.hpp"
 #include "rapidjson/document.h"
 #include "NativeGaudiBase.h"
 using namespace std;
 using namespace boost;
-using namespace rapidjson;
 
 class NativeGaudiBuilder : NativeGaudiBase {
-
 private: 
-	string buildConf;
+	vector<string> m_commands;
+	string target;
+	vector<string> m_action;
 	bool verbose;
 	void substituteVars(string);
 	string handleWildcards(string);
@@ -33,14 +34,26 @@ private:
 	void eraseFile(string, bool);
 
 public:
-	NativeGaudiBuilder(string, bool, bool, bool);
-	void doCommand(string, string);
-	void doAction(string); // Change to a JSON type.
+	NativeGaudiBuilder(string* commands, vector<string> preamble, bool socket, bool verbose, bool logging);
+	NativeGaudiBuilder(bool socket, bool verbose, bool logging);
+	void setTarget(string target);
+	void setAction(vector<string> action);
+	void doCommand(string command, string param);
+	void doAction();
 };
 
 // Constructor.
-NativeGaudiBuilder::NativeGaudiBuilder(string preamble, bool socket, bool verbose, bool logging) {
+NativeGaudiBuilder::NativeGaudiBuilder(string* commands, vector<string> preamble, bool socket, bool verbose, bool logging) {
 	this->verbose = verbose;
+	for(int i = 1; i < 100; i++) {
+		cout << "constructor >> " << commands[i] << endl;
+		m_commands.push_back(commands[i]);
+	}
+}
+
+// Short constructor.
+NativeGaudiBuilder::NativeGaudiBuilder(bool socket, bool verbose, bool logging) {
+	
 }
 
 // Subtitute variables for values.
@@ -73,13 +86,23 @@ void NativeGaudiBuilder::execExtern(string param) {
 	// TODO.
 }
 
+// Set target for the action.
+void NativeGaudiBuilder::setTarget(string target) {
+	this->target = target;
+}
+
+// Set action.
+void NativeGaudiBuilder::setAction(vector<string> action) {
+	m_action = action;
+}
+
 // Execute a command in the action.
-void NativeGaudiBuilder::doCommand(string cmd, string param) {
-	cout << cmd << ", " << param;
-	cout << buildConf;
+void NativeGaudiBuilder::doCommand(string command, string param) {
+	cout << command << " " << param << endl;
 }
 
 // Execute an action.
-void NativeGaudiBuilder::doAction(string action) {
-
+void NativeGaudiBuilder::doAction() {
+	for(int i = 1; i < m_action.size(); i++)
+		doCommand(m_commands[i], m_action[i]);
 }

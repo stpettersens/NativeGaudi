@@ -20,31 +20,35 @@ For dependencies, please see LICENSE file.
 using namespace std;
 using namespace rapidjson;
 
-class NativeGaudiForeman {
+class Foreman {
 private:
 	string m_buildConf;
 	string buildJson;
-	string m_action;
 	vector<string> preamble;
 	vector<string> commands;
 	string target;
 	string parseBuildJSON();
 	vector<string> getShards(string);
-public:
-	NativeGaudiForeman(string buildConf, string action);
 	string getTarget();
 	vector<string> getPreamble();
-	vector<string> getAction();
+	vector<string> getAction(string);
+
+public:
+	Foreman(string buildConf, string action);
 };
 
-NativeGaudiForeman::NativeGaudiForeman(string buildConf, string action) {
+Foreman::Foreman(string buildConf, string action) {
 	// Parse build config into build JSON object on initialization.
 	m_buildConf = buildConf;
-	m_action = action;
 	buildJson = parseBuildJSON();
+	preamble = getPreamble();
+	target = getTarget();
+
+	cout << "Action to execute = " << action << endl;
+	commands = getAction(action);
 }
 
-string NativeGaudiForeman::parseBuildJSON() {
+string Foreman::parseBuildJSON() {
 	Document document;
 	if(document.Parse<0>(m_buildConf.c_str()).HasParseError()) {
 		cout << "Error parsing build file (Bad JSON)." << endl;
@@ -56,11 +60,11 @@ string NativeGaudiForeman::parseBuildJSON() {
 }
 
 // Get sub-object 'shard's from build object.
-vector<string> NativeGaudiForeman::getShards(string objectName) {
+vector<string> Foreman::getShards(string objectName) {
 	Document document;
 	document.Parse<0>(this->buildJson.c_str()).HasParseError();
 	const Value& object = document[objectName.c_str()];
-	vector<string> shards(2);
+	vector<string> shards(2); // 200?
 	if(objectName == "preamble") {
 		assert(object.IsObject());
 		shards[0] = object["source"].GetString();
@@ -70,24 +74,23 @@ vector<string> NativeGaudiForeman::getShards(string objectName) {
 		assert(object.IsArray());
 		for(SizeType i = 0; i < object.Size(); i++) {
 			const Value& a = object[i];
-			shards.push_back(a["x"].GetString());
+			cout << a["x"].GetString() << endl;
 		}
-	}	
+	}
 	return shards;
 }
 
 // Get target from parsed preamble.
-string NativeGaudiForeman::getTarget() {
-	vector<string> preamble = getPreamble();
+string Foreman::getTarget() {
 	return preamble[1];
 }
 
 // Get the preamble from build object.
-vector<string> NativeGaudiForeman::getPreamble() {
+vector<string> Foreman::getPreamble() {
 	return getShards("preamble");
 }
 
 // Get an excution action.
-vector<string> NativeGaudiForeman::getAction() {
- 	return getShards(m_action);
+vector<string> Foreman::getAction(string action) {
+	return getShards(action);
 }

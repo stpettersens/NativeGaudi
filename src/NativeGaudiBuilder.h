@@ -17,10 +17,10 @@ using namespace std;
 
 class NativeGaudiBuilder : NativeGaudiBase {
 
-private: 
-
-	string buildConf;
-
+private:
+	vector<string> m_commands; 
+	string target;
+	vector<string> m_action;
 	void substituteVars(string[]);
 	string handleWildcards(string);
 	boost::tuple<string, string> extractCommand(string);
@@ -28,10 +28,11 @@ private:
 	void printCommand(string, string);
 	void execExtern(string);
 	void eraseFile(string, bool);
-
 public:
-
-	NativeGaudiBuilder(string, bool, bool, bool);
-	void doCommand(string, string);
-	void doAction(string); // Change to a JSON type.
+	NativeGaudiBuilder(string* commands, vector<string> preamble, bool socket, bool verbose, bool logging);
+	NativeGaudiBuilder(bool socket, bool verbose, bool logging);
+	void setTarget(string target);
+	void setAction(vector<string> action);
+	void doCommand(string command, string param);
+	void doAction();
 };
