@@ -24,14 +24,13 @@ using namespace std;
 class NativeGaudiApp : NativeGaudiBase {
 
 private:
-	char* program;
 	string appVersion;
 	int errCode;
-	string buildFile;
-
 	void displayError(string);
 
 public:
+	char* program;
+	string buildFile;
 	bool beVerbose;
 	bool logging;
 	bool uSocket;
@@ -45,7 +44,7 @@ public:
 		uSocket = false;
 	}
 
-	void displayUsage(char*, int);
+	void displayUsage(int);
 	void displayVersion();
 	void runCommand(char*, char*);
 	void loadBuild(string);
@@ -64,13 +63,12 @@ void NativeGaudiApp::displayVersion() {
 
 // Display an error. Overloaded for a string parameter.
 void NativeGaudiApp::displayError(string ex) {
-	cout << "\nError with: " << ex << ".";
-	displayUsage(program, errCode);
+	cout << "\nError with: " << ex << "." << endl;
+	displayUsage(errCode);
 }
 
 // Display usage information and exit.
-void NativeGaudiApp::displayUsage(char* program, int exitCode) {
-	this->program = program;
+void NativeGaudiApp::displayUsage(int exitCode) {
 	cout << "\nNativeGaudi platform agnostic build tool";
 	cout << "\nCopyright (c) 2012 Sam Saint-Pettersen";
 	cout << "\n\nReleased under the MIT/X11 License.";
@@ -106,6 +104,9 @@ void NativeGaudiApp::loadBuild(string action) {
 			buildConf += line;
 		}
 	}
+	else {
+		displayError("Build file (" + buildFile + "). Cannot be found/opened");
+	}
 	infile.close();
 
 	// Shrink string by replacing tabs with spaces;
@@ -115,18 +116,20 @@ void NativeGaudiApp::loadBuild(string action) {
 	// Peform key swapping for JSON array parsing (Hackish).
 	NativeGaudiCommands ocommands;
 	buildConf = ocommands.getXString(buildConf);
-	//string* commands = ocommands.getCommands();
+	string* commands = ocommands.getCommands();
 
 	// Delegate to the foreman and builder.
-	//NativeGaudiForeman foreman(buildConf, action);
-	//NativeGaudiBuilder builder(commands, foreman.getPreamble(), false, false, false);
-	//builder.setTarget(foreman.getTarget());
-	//builder.setAction(foreman.getAction());
-	//builder.doAction();
+	NativeGaudiForeman foreman(buildConf, action);
+	NativeGaudiBuilder builder(commands, action); //, foreman.getPreamble(), false, false, false);
+	builder.setTarget(foreman.getTarget());
+	builder.setAction(foreman.getAction());
+	builder.doAction();
+	exit(0);
 }
 
 int main(int argc, char* argv[]) {
 	NativeGaudiApp app;
+	app.program = argv[0];
 	string action = "build";
 
 	/* Default behavior is to build a project following
@@ -137,7 +140,7 @@ int main(int argc, char* argv[]) {
 	else if(argc > 1 && argc < 7) {
 		for (int i = 0; i < argc; i++)
 		{
-			if(strcmp(argv[i], "-i") == 0) app.displayUsage(argv[0], 0);
+			if(strcmp(argv[i], "-i") == 0) app.displayUsage(0);
 			else if(strcmp(argv[i], "-v") == 0) app.displayVersion();
 			else if(strcmp(argv[i], "-l") == 0) app.logging = true;
 			else if(strcmp(argv[i], "-s") == 0) app.uSocket = true;

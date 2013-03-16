@@ -19,10 +19,12 @@ class NativeGaudiCommands {
 private:
 	vector<string> builtins;
 	vector<string> commands;
+	string* acommands;
+	string* bubbleSort(int poss[], string commands[], int n);
 public:
 	NativeGaudiCommands();
 	string getXString(string buildConf);
-	vector<string> getCommands();
+	string* getCommands();
 };
 
 NativeGaudiCommands::NativeGaudiCommands() {
@@ -35,18 +37,45 @@ NativeGaudiCommands::NativeGaudiCommands() {
 }
 
 string NativeGaudiCommands::getXString(string buildConf) {
+	vector<int> poss(0);
 	string xstring = buildConf;
 	for(int i = 0; i < builtins.size(); i++) {
-		if(xstring.find(builtins[i]) != string::npos)
+		int pos = xstring.find(builtins[i]);
+		if(pos != string::npos) {
+			xstring = ireplace_first_copy(xstring, builtins[i], "x");
 			commands.push_back(builtins[i]);
+			poss.push_back(pos);
+		}
 	}
-	for(int i = 0; i < commands.size(); i++) {
-		cout << commands[i] << endl;		
-	}
+	int* aposs = &poss[0];
+	acommands = &commands[0];
+	acommands = bubbleSort(aposs, acommands, poss.size());
 	return xstring;
-} 
-			
+}
 
-vector<string> NativeGaudiCommands::getCommands() {
+string* NativeGaudiCommands::getCommands() {
+	return acommands;
+}
+
+string* NativeGaudiCommands::bubbleSort(int poss[], string commands[], int n) {
+	bool swapped = true;
+	int j = 0;
+	int tmp;
+	string stmp;
+	while(swapped) {
+		swapped = false;
+		j++;
+		for(int i = 0; i < n - j; i++) {
+			if(poss[i] > poss[i + 1]) {
+				tmp = poss[i];
+				poss[i] = poss[i + 1];
+				poss[i + 1] = tmp;
+				stmp = commands[i];
+				commands[i] = commands[i + 1];
+				commands[i + 1] = stmp;
+				swapped = true;
+			}
+		}
+	}
 	return commands;
 }

@@ -48,6 +48,7 @@ string NativeGaudiForeman::parseBuildJSON() {
 	Document document;
 	if(document.Parse<0>(m_buildConf.c_str()).HasParseError()) {
 		cout << "Error parsing build file (Bad JSON)." << endl;
+		exit(1);
 	}
 	StringBuffer json;
 	Writer<StringBuffer> writer(json);
@@ -60,11 +61,11 @@ vector<string> NativeGaudiForeman::getShards(string objectName) {
 	Document document;
 	document.Parse<0>(this->buildJson.c_str()).HasParseError();
 	const Value& object = document[objectName.c_str()];
-	vector<string> shards(2);
+	vector<string> shards(0);
 	if(objectName == "preamble") {
 		assert(object.IsObject());
-		shards[0] = object["source"].GetString();
-		shards[1] = object["target"].GetString();
+		shards.push_back(object["source"].GetString());
+		shards.push_back(object["target"].GetString());
 	}
 	else {
 		assert(object.IsArray());

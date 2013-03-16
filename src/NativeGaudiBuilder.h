@@ -18,18 +18,19 @@ using namespace std;
 class NativeGaudiBuilder : NativeGaudiBase {
 
 private:
-	vector<string> m_commands; 
+	string* m_commands; 
 	string target;
 	vector<string> m_action;
+	string action_name;
 	void substituteVars(string[]);
 	string handleWildcards(string);
 	boost::tuple<string, string> extractCommand(string);
 	void printError(string);
 	void printCommand(string, string);
-	void execExtern(string);
+	int execExtern(string);
 	void eraseFile(string, bool);
 public:
-	NativeGaudiBuilder(string* commands, vector<string> preamble, bool socket, bool verbose, bool logging);
+	NativeGaudiBuilder(string* commands, string action); //, vector<string> preamble, bool socket, bool verbose, bool logging);
 	NativeGaudiBuilder(bool socket, bool verbose, bool logging);
 	void setTarget(string target);
 	void setAction(vector<string> action);

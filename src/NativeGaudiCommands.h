@@ -19,8 +19,10 @@ class NativeGaudiCommands {
 private:
 	vector<string> builtins;
 	vector<string> commands;
+	string* acommands;
+	string* bubbleSort(int poss[], string commands[], int n);
 public:
 	NativeGaudiCommands();
 	string getXString(string buildConf);
-	vector<string> getCommands();
+	string* getCommands();
 };

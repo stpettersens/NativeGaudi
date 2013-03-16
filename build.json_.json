@@ -11,11 +11,13 @@
 		{ "echo": "Compiling NativeGaudi..." },
 		{ "exec": "g++ src/NativeGaudiBase.cpp src/NativeGaudiApp.cpp src/NativeGaudiForeman.cpp src/NativeGaudiBuilder.cpp 
 		   src/NativeGaudiHabitat.cpp src/NativeGaudiCommands.cpp -o bin/NativeGaudi -IC:/Dev/Boost" },
+		{ "echo": "Strip executable..." },
 		{ "xstrip": "bin/NativeGaudi" }
 	],
 	
 	"clean": [
 
+		{ "echo": "Erasing NativeGaudi..." },
 		{ "erasex": "bin/NativeGaudi" }
 	]
 }

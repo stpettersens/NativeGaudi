@@ -29,7 +29,7 @@ string* bubbleSort(int poss[], string found[], int n) {
 }
 
 int main() {
-	string string_with_cats = "Persian, Siamese, Shorthair, Mr. Mittens, Tomcat, Tortoise-shell";
+	string string_with_cats = "Persian, Siamese, Shorthair, Siamese, Mr. Mittens, Tomcat, Tortoise-shell";
 	vector<string> cats(0);
 	vector<string> found(0);
 	vector<int> poss(0);
