@@ -8,7 +8,6 @@ Java virtual machine, to native C++ code.
 Released under the MIT/X11 License.
 For dependencies, please see LICENSE file.
 */
-#include <iostream> // !
 #include <string>
 #include <cstdlib>
 #include <vector>
@@ -19,21 +18,12 @@ using namespace boost;
 class NativeGaudiHabitat {
 
 private:
-	vector<string> getPaths();
+
+	static vector<string> getPaths();
 
 public:
-	int getOSFamily();
-	tuple<string, string> getExeWithExt(string);
+
+	static unsigned int getOSFamily();
+	static tuple<string, string> getExeWithExt(string);
 
 };
-
-vector<string> NativeGaudiHabitat::getPaths() {
-	vector<string> paths(0);
-	const string PathVar = getenv("PATH");
-	paths.push_back(PathVar);
-	return paths;
-}
-
-int NativeGaudiHabitat::getOSFamily() {
-	return 0;
-}

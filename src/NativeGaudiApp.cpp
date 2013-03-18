@@ -26,7 +26,6 @@ class NativeGaudiApp : NativeGaudiBase {
 private:
 	string appVersion;
 	int errCode;
-	void displayError(string);
 
 public:
 	char* program;
@@ -44,6 +43,7 @@ public:
 		uSocket = false;
 	}
 
+	void displayError(string);
 	void displayUsage(int);
 	void displayVersion();
 	void runCommand(char*, char*);
@@ -70,7 +70,7 @@ void NativeGaudiApp::displayError(string ex) {
 // Display usage information and exit.
 void NativeGaudiApp::displayUsage(int exitCode) {
 	cout << "\nNativeGaudi platform agnostic build tool";
-	cout << "\nCopyright (c) 2012 Sam Saint-Pettersen";
+	cout << "\nCopyright (c) 2012-2013 Sam Saint-Pettersen";
 	cout << "\n\nReleased under the MIT/X11 License.";
 	cout << "\n\nUsage: " << program <<  " [-s <port>][-l][-i|-v|-n|-m][-q]";
 	cout << "\n[-p <plug-in>][-f <build file>][<action>|\"<:command>\"]";
@@ -138,12 +138,23 @@ int main(int argc, char* argv[]) {
 
 	// Handle command line arguments.
 	else if(argc > 1 && argc < 7) {
-		for (int i = 0; i < argc; i++)
+		for (int i = 1; i < argc; i++)
 		{
 			if(strcmp(argv[i], "-i") == 0) app.displayUsage(0);
 			else if(strcmp(argv[i], "-v") == 0) app.displayVersion();
 			else if(strcmp(argv[i], "-l") == 0) app.logging = true;
 			else if(strcmp(argv[i], "-s") == 0) app.uSocket = true;
+			else if(strcmp(argv[i], "-f") == 0) {
+				if(argv[i + 1] == NULL) {
+					app.displayError("Build file. Filename not provided");
+				}
+				else {
+					app.buildFile = argv[i + 1];
+					if(argv[i + 2] != NULL) action = argv[i + 2];
+					app.loadBuild(action);
+				}
+			}
+			else app.loadBuild(argv[i]);
 			//else if(strcmp(argv[1], "-b")) app.generateBuildFile();
 			//else app.runCommand(argv[1], argv[2]);
 		}

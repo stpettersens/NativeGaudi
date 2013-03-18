@@ -17,6 +17,7 @@ For dependencies, please see LICENSE file.
 #include "boost/tuple/tuple.hpp"
 #include "rapidjson/document.h"
 #include "NativeGaudiBase.h"
+#include "NativeGaudiHabitat.h"
 using namespace std;
 using namespace boost;
 
@@ -29,7 +30,6 @@ private:
 	bool verbose;
 	void substituteVars(string);
 	string handleWildcards(string);
-	tuple<string, string> extractCommand(string);
 	void printError(string);
 	void printCommand(string, string);
 	int execExtern(string);
@@ -67,13 +67,6 @@ string NativeGaudiBuilder::handleWildcards(string param) {
 	return "TODO"; // TODO.
 }
 
-// Extract command and parameter for execution.
-tuple<string, string> NativeGaudiBuilder::extractCommand(string cmdParam) {
-	string x = "x";
-	string y = "y";
-	return make_tuple(x, y); // TODO.
-}
-
 // Print executed command.
 void NativeGaudiBuilder::printCommand(string command, string param) {
 	if(verbose && command != "echo") {
@@ -102,10 +95,16 @@ void NativeGaudiBuilder::setAction(vector<string> action) {
 
 // Execute a command in the action.
 void NativeGaudiBuilder::doCommand(string command, string param) {
+	NativeGaudiHabitat habitat;
+	int os = habitat.getOSFamily();
 	printCommand(command, param);
 	int exitCode;
-	if(command == "exec") exitCode = execExtern(param);
-	else if(command == "xstrip") exitCode = execExtern("strip " + param);
+	if(command == "exec") {		
+		exitCode = execExtern(param);
+	}
+	else if(command == "xstrip") {
+		exitCode = execExtern("strip " + param);
+	}
 }
 
 // Execute an action.
