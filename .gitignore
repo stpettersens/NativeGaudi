@@ -15,6 +15,9 @@
 *.la
 *.a
 
+# Temporary files
+*.tmp
+
 # Specific directories
 bin
 rapidjson

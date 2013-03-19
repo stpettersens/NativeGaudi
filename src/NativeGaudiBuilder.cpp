@@ -96,14 +96,17 @@ void NativeGaudiBuilder::setAction(vector<string> action) {
 // Execute a command in the action.
 void NativeGaudiBuilder::doCommand(string command, string param) {
 	NativeGaudiHabitat habitat;
-	int os = habitat.getOSFamily();
 	printCommand(command, param);
 	int exitCode;
 	if(command == "exec") {		
 		exitCode = execExtern(param);
 	}
 	else if(command == "xstrip") {
+		int os = habitat.getOSFamily();
 		exitCode = execExtern("strip " + param);
+	}
+	else if(command == "erase") {
+		//remove(param.c_str());
 	}
 }
 

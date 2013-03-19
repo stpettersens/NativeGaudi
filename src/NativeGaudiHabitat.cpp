@@ -1,6 +1,6 @@
 /*
 NativeGaudi platform agnostic build tool.
-Copyright 2012 Sam Saint-Pettersen.
+Copyright 2012-2013 Sam Saint-Pettersen.
 
 Port of the original Scala/Java application (Gaudi), which ran on the
 Java virtual machine, to native C++ code.
@@ -12,6 +12,7 @@ For dependencies, please see LICENSE file.
 #include <string>
 #include <cstdlib>
 #include <vector>
+#include <fstream>
 #include "boost/tuple/tuple.hpp"
 using namespace std;
 using namespace boost;
@@ -35,5 +36,21 @@ vector<string> NativeGaudiHabitat::getPaths() {
 }
 
 int NativeGaudiHabitat::getOSFamily() {
+	const string uname[2] = { "uname", "ver" };
+	for(int i = 0; i < 2; i++) {
+		string command = uname[i] + " > os.tmp";
+		system(command.c_str()); 
+	}
+	const char* ostmp = "os.tmp";
+	string line, osstr;
+	ifstream osfile;
+	osfile.open(ostmp);
+	if(osfile.is_open()) {
+		while(getline(osfile, line)) {
+			osstr = line;
+		}
+	}
+	osfile.close();
+	//remove(ostmp);
 	return 0;
 }
