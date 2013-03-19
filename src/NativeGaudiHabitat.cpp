@@ -39,7 +39,8 @@ int NativeGaudiHabitat::getOSFamily() {
 	const string uname[2] = { "uname", "ver" };
 	for(int i = 0; i < 2; i++) {
 		string command = uname[i] + " > os.tmp";
-		system(command.c_str()); 
+		int exitCode = system(command.c_str());
+		if(exitCode == 0) break; 
 	}
 	const char* ostmp = "os.tmp";
 	string line, osstr;
@@ -51,6 +52,6 @@ int NativeGaudiHabitat::getOSFamily() {
 		}
 	}
 	osfile.close();
-	//remove(ostmp);
+	remove(ostmp);
 	return 0;
 }
