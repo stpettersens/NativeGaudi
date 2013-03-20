@@ -75,3 +75,18 @@ int NativeGaudiHabitat::getOSFamily() {
 	remove(ostmp);
 	return os;
 }
+
+tuple<string, string> NativeGaudiHabitat::getExeWithExt(string command) {
+	string pathTerm;
+	switch(getOSFamily()) {
+		case 0:
+			pathTerm = "\\";
+			break;
+		case 1:
+			pathTerm = "/";
+			break;
+	}
+	string exts[5] = { ".exe", ".bat", ".cmd", ".sh", "" };
+	regex expr("([\\w\\d\\+\\-\\_]+)\\s*(.*)");
+	return make_tuple("NULL", "NULL");
+}
