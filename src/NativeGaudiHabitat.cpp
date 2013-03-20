@@ -8,12 +8,12 @@ Java virtual machine, to native C++ code.
 Released under the MIT/X11 License.
 For dependencies, please see LICENSE file.
 */
-#include <iostream> // !
 #include <string>
 #include <cstdlib>
 #include <vector>
 #include <fstream>
 #include "boost/tuple/tuple.hpp"
+#include "boost/regex.hpp"
 using namespace std;
 using namespace boost;
 
@@ -36,6 +36,7 @@ vector<string> NativeGaudiHabitat::getPaths() {
 }
 
 int NativeGaudiHabitat::getOSFamily() {
+	int os = -1;
 	const string uname[2] = { "uname", "ver" };
 	for(int i = 0; i < 2; i++) {
 		string command = uname[i] + " > os.tmp";
@@ -52,6 +53,25 @@ int NativeGaudiHabitat::getOSFamily() {
 		}
 	}
 	osfile.close();
+	string patterns[3] = { "(Windows|MINGW32_NT-\\d\\.\\d)", "(.*n[i|u]x|.*BSD)", "(Darwin)" };
+	for(int i = 0; i < 3; i++) {
+		regex expr(patterns[i]);
+		cmatch match;
+		if(regex_match(osstr.c_str(), match, expr))
+		{
+			switch(i) {
+				case 0:
+					os = 0;
+					break;
+				case 1:
+					os = 1;
+					break;
+				case 2:
+					os = 2;
+					break;
+			}
+		}
+	}
 	remove(ostmp);
-	return 0;
+	return os;
 }

@@ -98,12 +98,13 @@ void NativeGaudiBuilder::doCommand(string command, string param) {
 	NativeGaudiHabitat habitat;
 	printCommand(command, param);
 	int exitCode;
-	if(command == "exec") {		
+	if(command == "exec") {
 		exitCode = execExtern(param);
 	}
 	else if(command == "xstrip") {
 		int os = habitat.getOSFamily();
-		exitCode = execExtern("strip " + param);
+		cout << os << endl;
+		//exitCode = execExtern("strip " + param);
 	}
 	else if(command == "erase") {
 		//remove(param.c_str());
