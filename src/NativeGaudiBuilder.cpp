@@ -56,7 +56,7 @@ NativeGaudiBuilder::NativeGaudiBuilder(bool socket, bool verbose, bool logging) 
 	
 }
 
-// Subtitute variables for values.
+// Substitute variables for values.
 void NativeGaudiBuilder::substituteVars(string action) {
 	// TODO.
 }
@@ -79,8 +79,7 @@ void NativeGaudiBuilder::printCommand(string command, string param) {
 
 // Execute an external program or process.
 int NativeGaudiBuilder::execExtern(string param) {
-	int exitCode = system(param.c_str());
-	return exitCode;
+	return system(param.c_str());
 }
 
 // Set target for the action.

@@ -25,7 +25,7 @@ class NativeGaudiApp : NativeGaudiBase {
 
 private:
 	string appVersion;
-	int errCode;
+	int errorCode;
 
 public:
 	char* program;
@@ -36,7 +36,7 @@ public:
 
 	NativeGaudiApp() {
 		appVersion = "0.1";
-		errCode = -2;
+		errorCode = -1;
 		buildFile = "build.json";
 		beVerbose = true;
 		logging = false;
@@ -61,10 +61,10 @@ void NativeGaudiApp::displayVersion() {
 	exit(0);
 }
 
-// Display an error. Overloaded for a string parameter.
-void NativeGaudiApp::displayError(string ex) {
-	cout << "\nError with: " << ex << "." << endl;
-	displayUsage(errCode);
+// Display an error.
+void NativeGaudiApp::displayError(string error) {
+	cout << "\nError with: " << error << "." << endl;
+	displayUsage(errorCode);
 }
 
 // Display usage information and exit.

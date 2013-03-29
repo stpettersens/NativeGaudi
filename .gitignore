@@ -21,3 +21,6 @@
 # Specific directories
 bin
 rapidjson
+
+# Other files
+*.n
