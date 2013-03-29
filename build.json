@@ -11,7 +11,7 @@
 	"build": [
 
 		{ "echo": "Compiling NativeGaudi..." },
-		{ "exec": "g++ src/NativeGaudiBase.cpp src/NativeGaudiApp.cpp src/NativeGaudiForeman.cpp src/NativeGaudiBuilder.cpp src/NativeGaudiHabitat.cpp src/NativeGaudiCommands.cpp libboost_regex-gcc.a -o bin/ngaudi -IC:/Dev/Boost" },
+		{ "exec": "g++ src/NativeGaudiBase.cpp src/NativeGaudiApp.cpp src/NativeGaudiForeman.cpp src/NativeGaudiBuilder.cpp src/NativeGaudiHabitat.cpp src/NativeGaudiCommands.cpp libboost_regex.a -o bin/ngaudi -IC:/Dev/Boost" },
 		{ "xstrip": "bin/ngaudi" }
 	],
 	

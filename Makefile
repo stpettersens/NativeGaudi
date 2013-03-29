@@ -3,7 +3,7 @@ SOURCES= src/NativeGaudiBase.cpp src/NativeGaudiApp.cpp src/NativeGaudiForeman.c
 TARGET= bin/ngaudi.exe
 LFLAGS= -o
 INCLUDES= -IC:/Dev/boost
-BOOST_REGEX= libboost_regex-gcc.a
+BOOST_REGEX= libboost_regex.a
 PLATFORM=$(shell uname -s)
 
 ifeq ($(PLATFORM), Linux)
