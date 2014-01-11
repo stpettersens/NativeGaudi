@@ -23,4 +23,4 @@ bin
 rapidjson
 
 # Other files
-*.n
+.n
