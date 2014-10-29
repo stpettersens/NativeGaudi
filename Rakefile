@@ -8,6 +8,7 @@ task :default => [:deps, :build, :test, :clean]
 task :deps do
 	puts "Get Boost libraries..."
 	sh "sudo apt-get install libboost-dev"
+	sh "sudo apt-get install libboost-regex-dev"
 	puts "Get rapidjson library..."
 	sh "wget https://rapidjson.googlecode.com/files/rapidjson-0.11.zip"
 	sh "mkdir working"
