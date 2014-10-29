@@ -1,6 +1,8 @@
 # 
-# Rakefile to build and test NativeGaudi on Travis CI.
-# To build on your own system; please use `make` instead.
+# Rakefile to build and test NativeGaudi
+# This is basically a wrapper around the true Makefile,
+# but it does also retrieve the dependencies.
+# That is the Boost libraries via APT and the rapidjson library from Google Code.
 #
 
 task :default => [:deps, :build, :test, :clean]
