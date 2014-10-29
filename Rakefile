@@ -14,7 +14,7 @@ task :deps do
 	puts "Get rapidjson library..."
 	sh "wget https://rapidjson.googlecode.com/files/rapidjson-0.11.zip"
 	sh "mkdir working"
-	sh "unzip rapidjson-0.11.zip -d working"
+	sh "unzip -qq rapidjson-0.11.zip -d working"
 	sh "cp -r working/rapidjson/include/rapidjson src"
 	sh "rm -f -r working *.zip"
 end
