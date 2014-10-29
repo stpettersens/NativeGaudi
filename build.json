@@ -11,12 +11,14 @@
 	"build": [
 
 		{ "echo": "Compiling NativeGaudi..." },
-		{ "exec": "g++ src/NativeGaudiBase.cpp src/NativeGaudiApp.cpp src/NativeGaudiForeman.cpp src/NativeGaudiBuilder.cpp src/NativeGaudiHabitat.cpp src/NativeGaudiCommands.cpp libboost_regex.a -o bin/ngaudi -IC:/Dev/Boost" },
+		{ "mkdir": "bin" },
+		{ "exec": "g++ src/NativeGaudiBase.cpp src/NativeGaudiApp.cpp src/NativeGaudiForeman.cpp src/NativeGaudiBuilder.cpp src/NativeGaudiHabitat.cpp src/NativeGaudiCommands.cpp -llibboost_regex -o bin/ngaudi -I/usr/include/boost" },
 		{ "xstrip": "bin/ngaudi" }
 	],
 	
 	"clean": [
 
-		{ "erasex": "bin/ngaudi" }
+		{ "erasex": "bin/ngaudi" },
+		{ "rmdir": "bin" }
 	]
 }
