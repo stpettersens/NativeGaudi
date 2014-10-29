@@ -6,7 +6,10 @@
 task :default => [:deps, :build, :test, :clean]
 
 task :deps do
-	puts "TODO: Get dependencies..."
+	puts "Get Boost libraries..."
+	sh "sudo apt-get install libboost-dev"
+	puts "Get rapidjson library..."
+	puts "TODO..."
 end
 
 task :build do
