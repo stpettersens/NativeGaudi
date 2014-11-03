@@ -2,3 +2,4 @@ language: cpp
 compiler: g++
 cache: apt
 script: rake default
+after_script: rake clean
