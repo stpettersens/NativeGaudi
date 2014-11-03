@@ -5,7 +5,7 @@
 # That is the Boost libraries via APT and the rapidjson library from Google Code.
 #
 
-task :default => [:deps, :build, :test, :clean]
+task :default => [:deps, :build, :test]
 
 task :deps do
 	puts "Get Boost libraries..."
